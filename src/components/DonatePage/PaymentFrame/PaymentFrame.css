@@ -1,0 +1,11 @@
+.payment-frame-container {
+    display: flex;
+    justify-content: center;
+}
+
+.payment-frame {
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    min-height: 500px;
+}

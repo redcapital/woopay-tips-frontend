@@ -6,18 +6,6 @@ import rootSaga from "./sagas";
 
 const sagaMiddleware = createSagaMiddleware();
 
-(window as any)["__INITIAL_STATE__"] = {
-  session: {
-    active: {
-      country: 1,
-      id: 21142011,
-      login: "77051234567",
-      email: "test@example.com",
-      created_at: "2022-09-24T13:31:42+0000",
-    },
-  },
-};
-
 const store = configureStore<AppState>({
   reducer,
   middleware: [sagaMiddleware],

@@ -7,6 +7,7 @@ import {
   setSession,
   login,
 } from "../actions/session";
+import history from "../history";
 import { client } from "../xhr";
 
 function* handleSignup(action: ReturnType<typeof signup>): any {
@@ -57,6 +58,7 @@ function* authenticate(params: { login: string; password: string }): any {
           created_at: response.data.created_at,
         })
       );
+      history.push("/");
     }
   } catch (err) {
     alert("Ошибка аутентификации");

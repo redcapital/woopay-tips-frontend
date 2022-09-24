@@ -1,5 +1,8 @@
 import { handleActions } from "redux-actions";
-import { createDonationDone } from "../actions/donation";
+import {
+  createDonationDone,
+  initializePaymentOperation,
+} from "../actions/donation";
 import { AppState } from "../types";
 
 const reducer = handleActions<AppState["donation"], any>(
@@ -10,6 +13,13 @@ const reducer = handleActions<AppState["donation"], any>(
     ) => ({
       ...state,
       created_service_name: action.payload.service_name,
+    }),
+    [`${initializePaymentOperation}`]: (
+      state,
+      action: ReturnType<typeof initializePaymentOperation>
+    ) => ({
+      ...state,
+      frame_url: action.payload.frame_url,
     }),
   },
   {}

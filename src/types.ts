@@ -4,6 +4,7 @@ export interface UserSession {
   login: string;
   email: string;
   created_at: string;
+  service_name?: string;
 }
 
 export interface AppState {
@@ -16,5 +17,6 @@ export interface AppState {
   };
   donation?: {
     created_service_name?: string;
+    frame_url?: string;
   };
 }

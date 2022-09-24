@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { WOOPPAY_API_URL } from "../constants";
 
 const frameType = "recharge";
 const frame_result_load = "4";
@@ -31,61 +32,63 @@ const errors_text = {
   e_96: "Не установлен 3DSecure(SecureCode) либо сбой связи. Позвоните в Колл-центр вашего банка.",
 };
 
-function messageHandler(event: MessageEvent<any>) {
-  if (!event.data) {
-    return;
-  }
-  const message = JSON.parse(event.data);
-  if (!message || message.source !== frameType) {
-    return;
-  }
+export default function usePaymentFrameHandler(onSuccess: () => void) {
+  const messageHandler = (event: MessageEvent<any>) => {
+    if (!event.data || event.origin !== WOOPPAY_API_URL) {
+      return;
+    }
+    let message;
+    try {
+      message = JSON.parse(event.data);
+    } catch (e) {
+      return;
+    }
+    console.log("msg data ", message);
+    if (!message || message.source !== frameType) {
+      return;
+    }
 
-  let err_info = "";
-  if (message.data && typeof message.data.errorCode !== "undefined") {
-    var err_key = "e_" + message.data.errorCode;
-    if (err_key in errors_text) {
-      err_info = (errors_text as any)[err_key];
+    let err_info = "";
+    if (message.data && typeof message.data.errorCode !== "undefined") {
+      var err_key = "e_" + message.data.errorCode;
+      if (err_key in errors_text) {
+        err_info = (errors_text as any)[err_key];
+      }
     }
-  }
-  if (message.status == frame_result_load) {
-    // место реакции на завершение рендера фрейма
-    // window.location = "js-call://message?data=4";
-    console.log("load");
-  } else if (message.status == frame_result_success) {
-    //место реакции на событие успешной валидация и отправки карточной формы
-    let referenceId = "";
-    if ("data" in message) {
-      referenceId =
-        "referenceId" in message.data
-          ? "&reference=" + message.data.referenceId
-          : "";
+    if (message.status == frame_result_load) {
+      // место реакции на завершение рендера фрейма
+      // window.location = "js-call://message?data=4";
+      console.log("load");
+    } else if (message.status == frame_result_success) {
+      //место реакции на событие успешной валидация и отправки карточной формы
+      let referenceId = "";
+      if ("data" in message) {
+        referenceId =
+          "referenceId" in message.data
+            ? "&reference=" + message.data.referenceId
+            : "";
+      }
+      onSuccess();
+    } else if (message.status == frame_result_error) {
+      // место реакции на ошибку фрейма
+      if (err_info == "") {
+        err_info =
+          "Произошла ошибка. Скорее всего вы ввели некорректные данные карты";
+      }
+      alert(err_info);
+    } else if (message.status == frame_result_authorisation_error) {
+      //место реакции на неверную авторицию фрейма.
+      if (err_info == "") {
+        err_info =
+          "Произошла ошибка. Возможно вы ввели некорректные данные карты";
+      }
+      alert(err_info);
+    } else if (message.status == frame_result_form_send) {
+      //место реакции на событие отправки формы
+      // window.location = "js-call://message?data=8&error=" + encodeURI(err_info);
     }
-    // window.location = "js-call://message?data=1" + referenceId;
-    console.log("success");
-  } else if (message.status == frame_result_error) {
-    // место реакции на ошибку фрейма
-    if (err_info == "") {
-      err_info =
-        "Произошла ошибка. Скорее всего вы ввели некорректные данные карты";
-    }
-    // window.location = "js-call://message?data=3&error=" + encodeURI(err_info);
-    console.log("err " + encodeURI(err_info));
-  } else if (message.status == frame_result_authorisation_error) {
-    //место реакции на неверную авторицию фрейма.
-    if (err_info == "") {
-      err_info =
-        "Произошла ошибка. Возможно вы ввели некорректные данные карты";
-    }
-    // window.location = "js-call://message?data=2&error=" + encodeURI(err_info);
-    console.log("auth_err " + encodeURI(err_info));
-  } else if (message.status == frame_result_form_send) {
-    //место реакции на событие отправки формы
-    // window.location = "js-call://message?data=8&error=" + encodeURI(err_info);
-    console.log("send_err " + encodeURI(err_info));
-  }
-}
+  };
 
-export default function usePaymentFrameHandler() {
   useEffect(() => {
     window.addEventListener("message", messageHandler);
 

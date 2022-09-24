@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://tips.appsteak.com/api/v1/",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8000/api/v1/"
+      : "https://tips.appsteak.com/api/v1/",
 });
 
 // function* xhrPost(

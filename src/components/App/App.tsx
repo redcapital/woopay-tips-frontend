@@ -1,24 +1,36 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  unstable_HistoryRouter as HistoryRouter,
+} from "react-router-dom";
+import history from "../../history";
 import SignupPage from "../SignupPage";
 import LoginPage from "../LoginPage";
 import HomePage from "../HomePage";
 import NotFoundPage from "../NotFoundPage";
 import CreateDonationPage from "../CreateDonationPage";
+import CreateDonationDonePage from "../CreateDonationDonePage";
+import DonatePage from "../DonatePage";
 
-import "./App.css";
+import "./bulma.css";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/create-donation" element={<CreateDonationPage />} />
+        <Route
+          path="/donation/create-done"
+          element={<CreateDonationDonePage />}
+        />
+        <Route path="/donation/create" element={<CreateDonationPage />} />
+        <Route path="/tip" element={<DonatePage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 };
 App.displayName = "App";
