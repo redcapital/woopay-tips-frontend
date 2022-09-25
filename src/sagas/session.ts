@@ -56,6 +56,7 @@ function* authenticate(params: { login: string; password: string }): any {
           login: response.data.login,
           email: response.data.email,
           created_at: response.data.created_at,
+          service_name: response.data.service_name,
         })
       );
       history.push("/");
