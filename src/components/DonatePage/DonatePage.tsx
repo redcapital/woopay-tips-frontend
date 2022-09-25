@@ -26,7 +26,7 @@ const DonatePage: React.FC<Props> = ({ frame_url, makeDonation }) => {
     }
   }, [searchParams, navigate]);
 
-  if (done || 1) {
+  if (done) {
     return (
       <div className="donate-page">
         <section className="container">
