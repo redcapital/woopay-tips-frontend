@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   signup as signupAction,
   activate as activateAction,
@@ -154,6 +155,13 @@ const SignupPage: React.FC<Props> = ({ signup, activate, signupLogin }) => {
         >
           Создать аккаунт
         </button>
+        <div className="field">
+          <div className="control">
+            <p className="mt-4">
+              Уже зарегистрированы? <Link to="/login">Войти</Link>
+            </p>
+          </div>
+        </div>
       </form>
     );
   }
@@ -169,15 +177,11 @@ const SignupPage: React.FC<Props> = ({ signup, activate, signupLogin }) => {
                 {form}
               </div>
               <div className="column right has-text-centered">
-                <h1 className="title is-1">Super Cool Website</h1>
+                <h1 className="title is-1">Рахмет.KZ</h1>
                 <h2 className="subtitle colored is-4">
-                  Lorem ipsum dolor sit amet.
+                  Принимайте чаевые или донаты
                 </h2>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Corporis ex deleniti aliquam tempora libero excepturi vero
-                  soluta odio optio sed.
-                </p>
+                <p>С нашим сервисом это сделать очень легко</p>
               </div>
             </div>
           </div>
@@ -212,7 +216,7 @@ const SignupPage: React.FC<Props> = ({ signup, activate, signupLogin }) => {
                   className="level-item"
                   style={{ color: "var(--textLight)" }}
                 >
-                  &copy; Super Cool Website. All Rights Reserved.
+                  &copy; Рахмет.KZ. Все права защищены.
                 </small>
               </div>
             </nav>
