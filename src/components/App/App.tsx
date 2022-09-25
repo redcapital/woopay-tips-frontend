@@ -12,6 +12,8 @@ import NotFoundPage from "../NotFoundPage";
 import CreateDonationPage from "../CreateDonationPage";
 import CreateDonationDonePage from "../CreateDonationDonePage";
 import DonatePage from "../DonatePage";
+import TodoPage from "../TodoPage";
+import HistoryPage from "../HistoryPage";
 
 import "./bulma.css";
 
@@ -27,6 +29,8 @@ const App: React.FC = () => {
         />
         <Route path="/donation/create" element={<CreateDonationPage />} />
         <Route path="/tip" element={<DonatePage />} />
+        <Route path="/history" element={<HistoryPage />} />
+        <Route path="/withdraw" element={<TodoPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

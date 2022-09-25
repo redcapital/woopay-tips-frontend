@@ -1,6 +1,6 @@
 import { connect, MapStateToProps } from "react-redux";
 import { AppState } from "../../types";
-import { Props } from "./HomePage";
+import { Props } from "./HistoryPage";
 
 type StateProps = Pick<Props, "session">;
 type OwnProps = Omit<Props, keyof StateProps>;
